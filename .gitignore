@@ -1,2 +1,5 @@
-/test/
-/.dart_tool/
+# Flutter-generated files to ignore
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
