@@ -5,12 +5,15 @@ class TextBtnWidget extends StatelessWidget {
   final VoidCallback onClick;
   final double width;
   final double height;
-  const TextBtnWidget(
-      {super.key,
-      required this.onClick,
-      required this.text,
-      this.width = 144,
-      this.height = 45});
+  final Color? textColor;
+  const TextBtnWidget({
+    super.key,
+    required this.onClick,
+    required this.text,
+    this.width = 144,
+    this.height = 45,
+    this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +46,10 @@ class TextBtnWidget extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
-            color: Color(0xff353935),
+            color: textColor ?? const Color(0xff353935),
             height: 0.7,
           ),
         ),

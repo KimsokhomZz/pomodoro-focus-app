@@ -10,21 +10,34 @@ class NavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(NavigationController());
 
-    TextStyle customTextStyle = const TextStyle(
-      fontFamily: 'Zain',
-      fontWeight: FontWeight.w600,
-      fontSize: 14,
+    // TextStyle customTextStyle = const TextStyle(
+    //   fontFamily: 'Zain',
+    //   fontWeight: FontWeight.w600,
+    //   fontSize: 14,
+    //   color: Color(0xffffffff),
+    // );
+
+    WidgetStateProperty<TextStyle> labelTextStyle =
+        WidgetStateProperty.resolveWith(
+      (states) => TextStyle(
+        fontFamily: 'Zain',
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        color: states.contains(WidgetState.selected)
+            ? const Color(0xff2E8B57) // Selected label color
+            : const Color(0xff353935), // Unselected label color,
+      ),
     );
 
     return Scaffold(
       bottomNavigationBar: Obx(
         () => Theme(
           data: ThemeData(
-            textTheme: TextTheme(
-              // Apply the custom text style to the navigation labels
-              labelMedium: customTextStyle, // For NavigationBar's label style
-            ),
-          ),
+              navigationBarTheme: NavigationBarThemeData(
+            backgroundColor: const Color(0xffffffff),
+            indicatorColor: const Color(0xff2E8B57).withOpacity(0.3),
+            labelTextStyle: labelTextStyle,
+          )),
           child: NavigationBar(
             height: 80,
             elevation: 0,

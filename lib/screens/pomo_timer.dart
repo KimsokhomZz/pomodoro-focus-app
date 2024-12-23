@@ -1,6 +1,11 @@
+// import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_app_project/widgets/nav_bar.dart';
+import 'package:focus_app_project/models/time_provider.dart';
+// import 'package:focus_app_project/widgets/nav_bar.dart';
 import 'package:focus_app_project/widgets/text_btn.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PomoTimerPage extends StatefulWidget {
   const PomoTimerPage({super.key});
@@ -10,17 +15,48 @@ class PomoTimerPage extends StatefulWidget {
 }
 
 class _PomoTimerState extends State<PomoTimerPage> {
+  final NumberFormat _formatter = NumberFormat('00');
+  final int _totalMinutes = 25;
+
+  // void _showTimeUpDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text("Time's up!"),
+  //       content: const Text('Take a short break or restart the time'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //           },
+  //           child: const Text('OK'),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final timerProvider = Provider.of<TimerProvider>(context);
+
+    // Calculate the total seconds that have passed if the timer is running
+    int elapsedTimeInSeconds = 0;
+    double progress = 0.0;
+    if (!timerProvider.isPaused) {
+      elapsedTimeInSeconds = (_totalMinutes - timerProvider.minutes) * 60 +
+          (60 - timerProvider.seconds);
+      int totalTimeInSeconds = _totalMinutes * 60; // Total time in seconds
+      progress = elapsedTimeInSeconds /
+          totalTimeInSeconds; // Calculate the progress (percentage)
+    }
+
     return Scaffold(
-      // backgroundColor: Color(0xffffffff),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding:
-                const EdgeInsets.only(top: 20, right: 40, bottom: 20, left: 40),
-            // const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -61,34 +97,49 @@ class _PomoTimerState extends State<PomoTimerPage> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                Container(
-                  width: 268,
-                  height: 268,
+                Stack(
                   alignment: Alignment.center,
-                  child: const Text(
-                    '25:00',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 48,
-                      color: Color(0xff353935),
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 200,
+                      // alignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                          backgroundColor: Color(0xffAFE1AF),
+                          value: progress,
+                          strokeWidth: 10,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Color(0xff2E8B57))),
                     ),
-                  ),
+                    Text(
+                      '${_formatter.format(timerProvider.minutes)} : ${_formatter.format(timerProvider.seconds)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 48,
+                        color: Color(0xff353935),
+                      ),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 48),
                 // Row(
                 //   children: [
                 //dot timer indicator
                 //   ],
                 // ),
                 ElevatedButton(
+                  onPressed: () {
+                    if (timerProvider.isPaused) {
+                      timerProvider.startTimer();
+                    } else {
+                      timerProvider.resumeTimer();
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
                     backgroundColor: Colors.transparent,
-                    // shadowColor: Colors.transparent,
                     shape: const StadiumBorder(),
                   ),
-                  onPressed: () {
-                    // Handle button press
-                  },
                   child: Ink(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
@@ -112,15 +163,15 @@ class _PomoTimerState extends State<PomoTimerPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'CODING',
+                            'START',
                             style: TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(width: 8),
                           Icon(
-                            Icons.computer_outlined,
+                            CupertinoIcons.play_arrow_solid,
                             size: 24,
                           ),
                         ],
@@ -128,21 +179,31 @@ class _PomoTimerState extends State<PomoTimerPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextBtnWidget(
-                      onClick: () {},
+                      onClick: () {
+                        timerProvider.restartTimer(); // Restart the timer
+                      },
                       text: 'RESTART',
                     ),
-                    TextBtnWidget(text: 'PAUSE', onClick: () {}),
+                    TextBtnWidget(
+                      text: 'PAUSE',
+                      onClick: () {
+                        timerProvider.pauseTimer();
+                      },
+                      textColor: Colors.red,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 TextBtnWidget(
-                  onClick: () {},
-                  text: 'START BREAK',
+                  onClick: () {
+                    timerProvider.shortBreak();
+                  },
+                  text: 'START SHORT BREAK',
                   width: 355,
                 ),
               ],
