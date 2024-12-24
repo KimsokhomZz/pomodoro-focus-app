@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_app_project/screens/pomo_timer.dart';
+import 'package:focus_app_project/screens/task_screen.dart';
 import 'package:get/get.dart'; // Import GetX package
 
 class NavigationMenu extends StatelessWidget {
@@ -100,7 +101,7 @@ class NavigationController extends GetxController {
   final List<Widget> screens = [
     Container(color: Colors.amber), // Diagram screen
     const PomoTimerPage(), // Pomo screen
-    Container(color: Colors.pink), // Task screen
+    const TaskScreen(), // Task screen
     Container(color: Colors.blue), // Setting screen
   ];
 }
