@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_app_project/models/task.dart';
 import 'package:focus_app_project/utils/validator.dart';
+import 'package:intl/intl.dart';
 
 class AddTaskDialogWidget extends StatefulWidget {
-  const AddTaskDialogWidget({super.key});
+  final Task? task;
+  const AddTaskDialogWidget({super.key, this.task});
 
   @override
   State<AddTaskDialogWidget> createState() => _AddTaskDialogWidgetState();
@@ -19,10 +21,28 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
   final TextEditingController _taskDesController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      _taskName = widget.task!.taskName;
+      _taskDescription = widget.task!.taskDescription;
+      _selectedDate = widget.task!.taskDate;
+
+      _taskNameController.text = _taskName;
+      _taskDesController.text = _taskDescription;
+      _dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+    } else {
+      _taskName = '';
+      _taskDescription = '';
+    }
+  }
+
   void _onSaveTask() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final String id = uuid.v4();
+      final String id =
+          widget.task?.id ?? uuid.v4(); // reuse ID for task editing
       //test printing stored data
       print(
           'ID: $id, Task Name: $_taskName, Description: $_taskDescription, Date: $_selectedDate');
@@ -30,7 +50,6 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
         id: id,
         taskName: _taskName,
         taskDescription: _taskDescription,
-        // taskCompleted: false, //default value
         taskDate: _selectedDate ?? DateTime.now(),
       );
       //close form
@@ -38,8 +57,12 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
       //success message
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Your task was added successfully!'),
+          SnackBar(
+            content: Text(
+              widget.task != null
+                  ? 'Task was updated successfully!'
+                  : 'Task was added successfully!',
+            ),
           ),
         );
       });
@@ -52,9 +75,9 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            const Text(
-              'ADD YOUR TASK',
-              style: TextStyle(
+            Text(
+              widget.task != null ? 'EDIT YOUR TASK' : 'ADD YOUR TASK',
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
@@ -72,22 +95,18 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
                     decoration: const InputDecoration(
                       label: Text('Task name'),
                     ),
-                    // maxLength: 50,
                     maxLines: 1,
                     validator: textValidator,
                     onSaved: (value) {
-                      _taskName = value!;
+                      _taskName = value!.trim();
                     },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   TextFormField(
                     controller: _taskDesController,
                     decoration: const InputDecoration(
                       label: Text('Task description'),
                     ),
-                    // maxLength: 150,
                     maxLines: 3,
                     validator: (value) {
                       String trimmedValue = value?.trim() ?? '';
@@ -100,15 +119,13 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
                       return null;
                     },
                     onSaved: (value) {
-                      _taskDescription = value!;
+                      _taskDescription = value!.trim();
                     },
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Due Date',
@@ -129,7 +146,7 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
 
                 DateTime? selectedDate = await showDatePicker(
                   context: context,
-                  initialDate: currentDateWithoutTime,
+                  initialDate: _selectedDate ?? currentDateWithoutTime,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2101),
                 );
@@ -139,7 +156,7 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
                     _selectedDate = selectedDate;
                     // Show the selected date if available
                     _dateController.text =
-                        _selectedDate?.toLocal().toString().split(' ')[0] ?? '';
+                        DateFormat('yyyy-MM-dd').format(_selectedDate!);
                   });
                 }
               },
@@ -150,13 +167,11 @@ class _AddTaskDialogWidgetState extends State<AddTaskDialogWidget> {
                 return null;
               },
               //no need cuz everything handle in onTap
-              onSaved: (value) {
-                _selectedDate = _selectedDate;
-              },
+              // onSaved: (value) {
+              //   _selectedDate = _selectedDate;
+              // },
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
