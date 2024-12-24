@@ -101,7 +101,7 @@ class NavigationController extends GetxController {
   final List<Widget> screens = [
     Container(color: Colors.amber), // Diagram screen
     const PomoTimerPage(), // Pomo screen
-    const TaskScreen(), // Task screen
+    TaskScreen(), // Task screen
     Container(color: Colors.blue), // Setting screen
   ];
 }

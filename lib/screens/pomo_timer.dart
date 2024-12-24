@@ -52,164 +52,159 @@ class _PomoTimerState extends State<PomoTimerPage> {
     }
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    const Spacer(),
-                    Tooltip(
-                      message: 'Profile',
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.transparent, // No background color
-                          shadowColor: Colors.transparent,
-                          padding: EdgeInsets.zero,
-                        ),
-                        onPressed: () {
-                          //navigate to profile page
-                          print('Navigate to profile page');
-                        },
-                        child: Image.asset(
-                          'assets/icons/profile_icon.png',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'ROUND 2',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff353935),
+                const Spacer(),
+                Tooltip(
+                  message: 'Profile',
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
                   ),
-                ),
-                const SizedBox(height: 32),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 200,
-                      // alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                          backgroundColor: Color(0xffAFE1AF),
-                          value: progress,
-                          strokeWidth: 10,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Color(0xff2E8B57))),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.transparent, // No background color
+                      shadowColor: Colors.transparent,
+                      padding: EdgeInsets.zero,
                     ),
-                    Text(
-                      '${_formatter.format(timerProvider.minutes)} : ${_formatter.format(timerProvider.seconds)}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 48,
-                        color: Color(0xff353935),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 48),
-                // Row(
-                //   children: [
-                //dot timer indicator
-                //   ],
-                // ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (timerProvider.isPaused) {
-                      timerProvider.startTimer();
-                    } else {
-                      timerProvider.resumeTimer();
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Colors.transparent,
-                    shape: const StadiumBorder(),
-                  ),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xffAFE1AF),
-                          Color(0xff2E8B57),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                          20), // Match StadiumBorder shape
-                    ),
-                    child: Container(
-                      width: 155,
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 26.0),
-                      alignment: Alignment.center,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'START',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(
-                            CupertinoIcons.play_arrow_solid,
-                            size: 24,
-                          ),
-                        ],
-                      ),
+                    onPressed: () {
+                      //navigate to profile page
+                      print('Navigate to profile page');
+                    },
+                    child: Image.asset(
+                      'assets/icons/profile_icon.png',
                     ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextBtnWidget(
-                      onClick: () {
-                        timerProvider.restartTimer(); // Restart the timer
-                      },
-                      text: 'RESTART',
-                    ),
-                    TextBtnWidget(
-                      text: 'PAUSE',
-                      onClick: () {
-                        timerProvider.pauseTimer();
-                      },
-                      textColor: Colors.red,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                TextBtnWidget(
-                  onClick: () {
-                    timerProvider.shortBreak();
-                  },
-                  text: 'START SHORT BREAK',
-                  width: 355,
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            const Text(
+              'ROUND 2',
+              style: TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff353935),
+              ),
+            ),
+            const SizedBox(height: 32),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  width: 200,
+                  height: 200,
+                  // alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                      backgroundColor: Color(0xffAFE1AF),
+                      value: progress,
+                      strokeWidth: 10,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xff2E8B57))),
+                ),
+                Text(
+                  '${_formatter.format(timerProvider.minutes)} : ${_formatter.format(timerProvider.seconds)}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 48,
+                    color: Color(0xff353935),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 48),
+            // Row(
+            //   children: [
+            //dot timer indicator
+            //   ],
+            // ),
+            ElevatedButton(
+              onPressed: () {
+                if (timerProvider.isPaused) {
+                  timerProvider.startTimer();
+                } else {
+                  timerProvider.resumeTimer();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                shape: const StadiumBorder(),
+              ),
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xffAFE1AF),
+                      Color(0xff2E8B57),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(20), // Match StadiumBorder shape
+                ),
+                child: Container(
+                  width: 155,
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 26.0),
+                  alignment: Alignment.center,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'START',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(
+                        CupertinoIcons.play_arrow_solid,
+                        size: 24,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextBtnWidget(
+                  onClick: () {
+                    timerProvider.restartTimer(); // Restart the timer
+                  },
+                  text: 'RESTART',
+                ),
+                TextBtnWidget(
+                  text: 'PAUSE',
+                  onClick: () {
+                    timerProvider.pauseTimer();
+                  },
+                  textColor: Colors.red,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextBtnWidget(
+              onClick: () {
+                timerProvider.shortBreak();
+              },
+              text: 'START SHORT BREAK',
+              width: 355,
+            ),
+          ],
+        ),
       ),
     );
   }

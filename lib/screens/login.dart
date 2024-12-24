@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:focus_app_project/utils.dart';
+import 'package:focus_app_project/utils/validator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

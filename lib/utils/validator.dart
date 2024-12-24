@@ -23,3 +23,11 @@ String? passwordValidator(String? value) {
 
   return null;
 }
+
+//text input validator
+String? textValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "Please enter task name";
+  }
+  return null;
+}
