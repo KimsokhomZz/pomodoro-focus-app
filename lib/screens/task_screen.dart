@@ -112,6 +112,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
             const Text(
               'TASKS',
               style: TextStyle(

@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_app_project/models/time_provider.dart';
+import 'package:focus_app_project/widgets/heading_bar.dart';
 // import 'package:focus_app_project/widgets/nav_bar.dart';
 import 'package:focus_app_project/widgets/text_btn.dart';
 import 'package:intl/intl.dart';
@@ -57,33 +58,7 @@ class _PomoTimerState extends State<PomoTimerPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                const Spacer(),
-                Tooltip(
-                  message: 'Profile',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.transparent, // No background color
-                      shadowColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                    ),
-                    onPressed: () {
-                      //navigate to profile page
-                      print('Navigate to profile page');
-                    },
-                    child: Image.asset(
-                      'assets/icons/profile_icon.png',
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            const HeadingBar(),
             const SizedBox(height: 8),
             const Text(
               'ROUND 2',
