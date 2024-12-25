@@ -53,7 +53,7 @@ class _TaskScreenState extends State<TaskScreen> {
   //edit task method
   void editTask(String taskId) {
     print('Edit task with ID: $taskId');
-
+    //pass taskId to formInput for editing
     _navigateToAddTask(editTaskId: taskId);
   }
 
@@ -240,9 +240,14 @@ class TaskWidget extends StatelessWidget {
                   children: [
                     Text(
                       taskName.trim(),
-                      style: const TextStyle(
-                        color: Color(0xffffffff),
+                      style: TextStyle(
+                        color: const Color(0xffffffff),
                         fontSize: 18,
+                        decoration: taskCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        decorationColor: Colors.white,
+                        decorationThickness: 2,
                       ),
                     ),
                     const Spacer(),
