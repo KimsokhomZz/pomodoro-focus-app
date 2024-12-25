@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:focus_app_project/screens/signup_screen.dart';
+import 'package:focus_app_project/widgets/nav_bar.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:focus_app_project/utils/validator.dart';
 
@@ -29,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           passwordInput == storedPassword) {
         print("Login successful!");
         // Navigate to home screen or dashboard
+        Get.offAll(() => const NavigationMenu());
       } else {
         print("Invalid credentials");
         //show proper message
@@ -167,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          //future logic
+                          //login with google (future)
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -189,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          //future logic
+                          //login with apple (future)
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -223,6 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: () {
                               //navigato sign-up
+                              Get.to(() => const SignUpPage());
                             },
                             child: const Text(
                               'Register',

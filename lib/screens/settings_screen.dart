@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_app_project/screens/login_screen.dart';
 import 'package:focus_app_project/widgets/heading_bar.dart';
 import 'package:focus_app_project/widgets/timer_length_settngs.dart';
+import 'package:get/get.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -11,6 +13,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  //logout logic
+  Future<void> _logOut() async {
+    Get.offAll(() => const LoginPage());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               duration: 'Log Out',
               icon: CupertinoIcons.escape,
               onDurationTap: () {
-                //switch to dark mode
+                _logOut();
               },
             ),
           ],

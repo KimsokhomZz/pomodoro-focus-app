@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:focus_app_project/models/time_provider.dart';
+import 'package:focus_app_project/screens/login_screen.dart';
 import 'package:focus_app_project/theme/theme.dart';
 import 'package:focus_app_project/widgets/nav_bar.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
-      home: const NavigationMenu(),
+      home: const LoginPage(),
+      // home: const NavigationMenu(),
     );
   }
 }

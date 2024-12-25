@@ -17,40 +17,44 @@ class PomoTimerPage extends StatefulWidget {
 
 class _PomoTimerState extends State<PomoTimerPage> {
   final NumberFormat _formatter = NumberFormat('00');
-  final int _totalMinutes = 25;
-
-  // void _showTimeUpDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text("Time's up!"),
-  //       content: const Text('Take a short break or restart the time'),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () {
-  //             Navigator.pop(context);
-  //           },
-  //           child: const Text('OK'),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
     final timerProvider = Provider.of<TimerProvider>(context);
 
-    // Calculate the total seconds that have passed if the timer is running
-    int elapsedTimeInSeconds = 0;
-    double progress = 0.0;
-    if (!timerProvider.isPaused) {
-      elapsedTimeInSeconds = (_totalMinutes - timerProvider.minutes) * 60 +
-          (60 - timerProvider.seconds);
-      int totalTimeInSeconds = _totalMinutes * 60; // Total time in seconds
-      progress = elapsedTimeInSeconds /
-          totalTimeInSeconds; // Calculate the progress (percentage)
-    }
+    // const int totalMinutes = 25;
+    // // const int totalMinutes = 1;  //for testing
+    // // Total time in seconds (based on fixed 25 minutes)
+    // const int totalTimeInSeconds = totalMinutes * 60;
+
+    // // Remaining time in seconds
+    // final int remainingTimeInSeconds =
+    //     (timerProvider.minutes * 60) + timerProvider.seconds;
+
+    // // Calculate progress
+    // double progress = 1.0 - (remainingTimeInSeconds / totalTimeInSeconds);
+
+    // // Ensure progress is between 0.0 and 1.0
+    // progress = progress.clamp(0.0, 1.0);
+
+    // Determine the total minutes for the timer (25 for work, 5 for short break)
+    int totalMinutes = timerProvider.isShortBreak ? 5 : 25;
+
+    // Total time in seconds based on the current state (either 25 or 5 minutes)
+    int totalTimeInSeconds = totalMinutes * 60;
+
+    // Remaining time in seconds
+    final int remainingTimeInSeconds = (timerProvider.minutes * 60) + timerProvider.seconds;
+
+    // Calculate progress based on the total time
+    double progress = 1.0 - (remainingTimeInSeconds / totalTimeInSeconds);
+
+    // Ensure progress is between 0.0 and 1.0
+    progress = progress.clamp(0.0, 1.0);
+
+    // Debugging for testing output
+    // print(
+    //     'Total Time: $totalTimeInSeconds, Remaining Time: $remainingTimeInSeconds, Progress: $progress');
 
     return Scaffold(
       body: Padding(
@@ -60,9 +64,9 @@ class _PomoTimerState extends State<PomoTimerPage> {
           children: [
             const HeadingBar(),
             const SizedBox(height: 8),
-            const Text(
-              'ROUND 2',
-              style: TextStyle(
+            Text(
+              'ROUND ${timerProvider.currentRound}',
+              style: const TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff353935),
@@ -75,13 +79,12 @@ class _PomoTimerState extends State<PomoTimerPage> {
                 SizedBox(
                   width: 200,
                   height: 200,
-                  // alignment: Alignment.center,
                   child: CircularProgressIndicator(
-                      backgroundColor: Color(0xffAFE1AF),
+                      backgroundColor: const Color(0xffAFE1AF),
                       value: progress,
                       strokeWidth: 10,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xff2E8B57))),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                          Color(0xff2E8B57))),
                 ),
                 Text(
                   '${_formatter.format(timerProvider.minutes)} : ${_formatter.format(timerProvider.seconds)}',
@@ -93,12 +96,24 @@ class _PomoTimerState extends State<PomoTimerPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 48),
-            // Row(
-            //   children: [
-            //dot timer indicator
-            //   ],
-            // ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(4, (index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: timerProvider.currentRound > index
+                        ? const Color(0xff2E8B57)
+                        : const Color(0xffAFE1AF),
+                    shape: BoxShape.circle,
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 if (timerProvider.isPaused) {
@@ -141,7 +156,7 @@ class _PomoTimerState extends State<PomoTimerPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(width: 8),
+                      SizedBox(width: 18),
                       Icon(
                         CupertinoIcons.play_arrow_solid,
                         size: 24,

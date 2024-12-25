@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:focus_app_project/widgets/nav_bar.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:focus_app_project/utils/validator.dart';
 
@@ -47,7 +49,8 @@ class _SignUpPageState extends State<SignUpPage> {
       await prefs.setString('email', _userEmailController.text);
       await prefs.setString('password', _passwordController.text);
       print('User Sgined Up!');
-      // Optionally, navigate to login page or home page
+      //navigate to home page
+      Get.offAll(() => const NavigationMenu());
     }
   }
 
@@ -197,7 +200,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     OutlinedButton(
                       onPressed: () {
-                        //future logic
+                        //sign-up with google (future)
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     OutlinedButton(
                       onPressed: () {
-                        //future logic
+                        //sign-up with apple
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -252,7 +255,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 EdgeInsets.zero, // Removes the default padding
                           ),
                           onPressed: () {
-                            //navigato login
+                            //navigate login
+                            Get.back();
                           },
                           child: const Text(
                             'Sign In',
