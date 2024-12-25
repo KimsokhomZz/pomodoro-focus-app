@@ -16,32 +16,6 @@ class _LoginPageState extends State<LoginPage> {
 
   String? _emailErrorMessage;
 
-  // //email validation
-  // String? _userEmailValidator(String? value) {
-  //   if (value == null || value.trim().isEmpty) {
-  //     return 'Please enter a email';
-  //   }
-  //   // Regular expression to check for valid email format
-  //   String pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-  //   RegExp regExp = RegExp(pattern);
-  //   if (!regExp.hasMatch(value.trim())) {
-  //     return 'Please enter a valid email address';
-  //   }
-
-  //   return null;
-  // }
-
-  // //password validation
-  // String? _passwordValidator(String? value) {
-  //   if (value == null || value.trim().isEmpty) {
-  //     return 'Please enter a password';
-  //   } else if (value.length < 6) {
-  //     return 'Password must be at least 6 characters long';
-  //   }
-
-  //   return null;
-  // }
-
   // Login process
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {

@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:focus_app_project/data/task_list.dart';
 import 'package:focus_app_project/models/task.dart';
 import 'package:focus_app_project/widgets/add_task.dart';
+import 'package:focus_app_project/widgets/heading_bar.dart';
 import 'package:intl/intl.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -85,33 +86,7 @@ class _TaskScreenState extends State<TaskScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
         child: Column(
           children: [
-            Row(
-              children: [
-                const Spacer(),
-                Tooltip(
-                  message: 'Profile',
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.transparent, // No background color
-                      shadowColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                    ),
-                    onPressed: () {
-                      //navigate to profile page
-                      print('Navigate to profile page');
-                    },
-                    child: Image.asset(
-                      'assets/icons/profile_icon.png',
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            const HeadingBar(),
             const SizedBox(height: 8),
             const Text(
               'TASKS',

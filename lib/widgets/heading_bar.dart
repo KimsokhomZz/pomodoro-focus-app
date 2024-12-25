@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:focus_app_project/screens/profile_screen.dart';
+import 'package:get/get.dart';
 
 class HeadingBar extends StatelessWidget {
   const HeadingBar({super.key});
@@ -21,8 +23,7 @@ class HeadingBar extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
             onPressed: () {
-              //navigate to profile page
-              print('Navigate to profile page');
+              Get.to(() => const ProfileScreen());
             },
             child: Image.asset(
               'assets/icons/profile_icon.png',
