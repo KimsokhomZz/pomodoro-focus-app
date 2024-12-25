@@ -22,21 +22,6 @@ class _PomoTimerState extends State<PomoTimerPage> {
   Widget build(BuildContext context) {
     final timerProvider = Provider.of<TimerProvider>(context);
 
-    // const int totalMinutes = 25;
-    // // const int totalMinutes = 1;  //for testing
-    // // Total time in seconds (based on fixed 25 minutes)
-    // const int totalTimeInSeconds = totalMinutes * 60;
-
-    // // Remaining time in seconds
-    // final int remainingTimeInSeconds =
-    //     (timerProvider.minutes * 60) + timerProvider.seconds;
-
-    // // Calculate progress
-    // double progress = 1.0 - (remainingTimeInSeconds / totalTimeInSeconds);
-
-    // // Ensure progress is between 0.0 and 1.0
-    // progress = progress.clamp(0.0, 1.0);
-
     // Determine the total minutes for the timer (25 for work, 5 for short break)
     int totalMinutes = timerProvider.isShortBreak ? 5 : 25;
 

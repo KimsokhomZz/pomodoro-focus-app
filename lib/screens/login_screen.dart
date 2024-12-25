@@ -46,8 +46,20 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Invalid Credentials"),
-          content: const Text("Please check your email and password."),
+          title: const Text(
+            "Invalid Credentials",
+            style: TextStyle(
+              fontSize: 20,
+              color: Color(0xff353935),
+            ),
+          ),
+          content: Text(
+            "Please check your email and password.",
+            style: TextStyle(
+              fontSize: 16,
+              color: const Color(0xff353935).withOpacity(0.7),
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {

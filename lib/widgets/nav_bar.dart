@@ -12,13 +12,6 @@ class NavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(NavigationController());
 
-    // TextStyle customTextStyle = const TextStyle(
-    //   fontFamily: 'Zain',
-    //   fontWeight: FontWeight.w600,
-    //   fontSize: 14,
-    //   color: Color(0xffffffff),
-    // );
-
     WidgetStateProperty<TextStyle> labelTextStyle =
         WidgetStateProperty.resolveWith(
       (states) => TextStyle(
@@ -59,16 +52,16 @@ class NavigationMenu extends StatelessWidget {
               onDestinationSelected: (index) =>
                   controller.selectedIndex.value = index,
               destinations: [
-                NavigationDestination(
-                  icon: Icon(
-                    CupertinoIcons.graph_circle,
-                    size: 28,
-                    color: controller.selectedIndex.value == 0
-                        ? const Color(0xff2E8B57) // Selected icon color
-                        : const Color(0xff353935), // Unselected icon color
-                  ),
-                  label: "Graph",
-                ),
+                // NavigationDestination(
+                //   icon: Icon(
+                //     CupertinoIcons.graph_circle,
+                //     size: 28,
+                //     color: controller.selectedIndex.value == 0
+                //         ? const Color(0xff2E8B57) // Selected icon color
+                //         : const Color(0xff353935), // Unselected icon color
+                //   ),
+                //   label: "Graph",
+                // ),
                 NavigationDestination(
                   icon: Icon(
                     CupertinoIcons.timer,
@@ -113,7 +106,7 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
   final List<Widget> screens = [
-    Container(color: Colors.amber), // Diagram screen
+    // Container(color: Colors.amber), // Diagram screen
     const PomoTimerPage(), // Pomo screen
     const TaskScreen(), // Task screen
     const SettingsScreen(), // Setting screen
